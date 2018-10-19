@@ -5,6 +5,8 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const graph = require('fbgraph');
+// setting up the model
+const User = require('./models/user');
 
 const app = express();
 const port = 8000;
@@ -27,12 +29,15 @@ passport.use(new FacebookStrategy({
   callbackURL: `${process.env.FB_CALLBACK_URL}/auth/facebook/callback`
 }, (accessToken, refreshToken, profile, cb)  => {
       // store user in session and BD
-      var user = {
-        accessToken: accessToken,
-        profile: profile
-      }
-      // execute cb
-      cb(null,user);
+      // db
+      User.findOrCreate({uid: profile_id, provider: 'facebook'}, {
+        name: profile.displayName,
+        provider: 'facebook',
+        accessToken: accessToken
+      },(err,user) => {
+        // execute cb
+        cb(null,user);
+      });
 }
 ));
 // passport store user session
