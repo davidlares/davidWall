@@ -14,16 +14,16 @@
 
 ## Dependencias
 
-  body-parser -> Manejador de las variables del cuerpo HTTP para peticiones vía POST.
-  cookie-session -> Creación de sesiones y cookies para ExpressJS.
-  dotenv -> Librería para el manejo de variables de entorno.
-  express -> Framework web minimalista de NodeJs.
-  fbgraph -> Librería que permite acceso a API Graph de Facebook.
-  mongoose -> ORM de bases de datos no relacionales.
-  mongoose-findorcreate -> extensión de las funcionalidades de Mongoose para buscar de manera fácil si existe un registro o no.
-  passport -> middleware de autenticación para NodeJS.
-  passport-facebook -> estrategía de autenticación de passport para servicios de Facebook.
-  pug -> motor de vista HTML.
+  - body-parser -> Manejador de las variables del cuerpo HTTP para peticiones vía POST.
+  - cookie-session -> Creación de sesiones y cookies para ExpressJS.
+  - dotenv -> Librería para el manejo de variables de entorno.
+  - express -> Framework web minimalista de NodeJs.
+  - fbgraph -> Librería que permite acceso a API Graph de Facebook.
+  - mongoose -> ORM de bases de datos no relacionales.
+  - mongoose-findorcreate -> extensión de las funcionalidades de Mongoose para buscar de manera fácil si existe un registro o no.
+  - passport -> middleware de autenticación para NodeJS.
+  - passport-facebook -> estrategía de autenticación de passport para servicios de Facebook.
+  - pug -> motor de vista HTML.
 
 ##  Despliegue Local
 
