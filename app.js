@@ -30,7 +30,7 @@ passport.use(new FacebookStrategy({
 }, (accessToken, refreshToken, profile, cb)  => {
       // store user in session and BD
       // db
-      User.findOrCreate({uid: profile_id, provider: 'facebook'}, {
+      User.findOrCreate({uid: profile.id, provider: 'facebook'}, {
         name: profile.displayName,
         provider: 'facebook',
         accessToken: accessToken
@@ -48,15 +48,30 @@ passport.deserializeUser((user,done) => {
   done(null,user);
 });
 
-app.get('/', (req,res) => {
-  res.render('index');
-});
-
 // start auth cycle with FB
 app.get('/auth/facebook', passport.authenticate('facebook', {}))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {redirectTo : '/'}), (req,res) => {
   console.log(req.session);
   res.redirect('/')
+});
+
+
+app.get('/', (req,res) => {
+  if (typeof req.session.passport == "undefined" || !req.session.passport.user){
+    res.render('index');
+  } else {
+    // logged page
+    res.render('home')
+  }
+});
+
+// wall post
+
+// find friends
+
+app.get('/auth/logout', (req,res) => {
+  req.logout();
+  res.redirect('/');
 });
 
 app.listen(port, () => {
