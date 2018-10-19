@@ -15,10 +15,10 @@ html
               li
                 a(href="/auth/logout") Logout
       section
-        h1 Awesome profiles
-        p Tell us about your accomplishments and let others know you  
+        h4 Here are your friends (authenticated)
+        p Tell us about your accomplishments y let others know you  
         .row
-          .col-xs-6(style="float:none;")
-            form(action='/goal' method="POST")
-              input(type="text" class="form-control" name="goal" placeholder="Share me your new goal")
-              input(type="submit" value="Share goal" class="btn btn-info" style="margin-top: 10px")  
+          for user in users
+            .col-xs-6.text-center
+              img(src="https://graph.facebook.com/" + user.uid + '/picture?height=200')
+              h4=user.name

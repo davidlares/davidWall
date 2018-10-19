@@ -49,7 +49,7 @@ passport.deserializeUser((user,done) => {
 });
 
 // start auth cycle with FB
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['publish_actions','user_friends']}))
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['publish_to_group','manage_pages','publish_pages','status_update','user_friends']}))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {redirectTo : '/'}), (req,res) => {
   console.log(req.session);
   res.redirect('/')
@@ -66,8 +66,33 @@ app.get('/', (req,res) => {
 });
 
 // wall post
+app.post('/goal', (req,res) => {
+   var goal = req.body.goal;
+   graph.setAccessToken(req.session.passport.user.accessToken);
+   graph.post('/feed', {message: goal}, (err, graphResponse) => {
+     console.log(graphResponse);
+     res.redirect('/');
+   });
+});
 
 // find friends
+app.get('/friends', (req,res) => {
+  graph.setAccessToken(req.session.passport.user.accessToken);
+  graph.get('me/friends', (err, graphResponse) => {
+    // res.json(graphResponse);
+    // Extract ids from array
+    var ids = graphResponse.data.map((el) => {
+      return el.id;
+    });
+    // search from the user collection, uid = the obtained
+    User.find({
+      'uid': {$in: ids}
+    }, (err,users) => {
+      res.render('friends',{users: users});
+    });
+    // show users
+  });
+});
 
 app.get('/auth/logout', (req,res) => {
   req.logout();
