@@ -49,7 +49,7 @@ passport.deserializeUser((user,done) => {
 });
 
 // start auth cycle with FB
-app.get('/auth/facebook', passport.authenticate('facebook', {}))
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['publish_actions','user_friends']}))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {redirectTo : '/'}), (req,res) => {
   console.log(req.session);
   res.redirect('/')
